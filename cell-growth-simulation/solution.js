@@ -30,6 +30,30 @@
 
 function simulateCellGrowth(grid, k) {
   // Your implementation here
+  const rows = grid.length;
+  const cols = grid[0].length;  
+  
+  for (let step = 0; step < k; step++) {
+    const newGrid = grid.map(row => [...row]);
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        if (grid[i][j] >= 2) {
+          // visit adjacent cells and increment their growth
+          const directions = [[-1,0], [1,0], [0,-1], [0,1]];
+          for (const [di, dj] of directions) {
+            const ni = i + di;
+            const nj = j + dj;
+            if (ni >= 0 && ni < rows && nj >= 0 && nj < cols) {
+              newGrid[ni][nj]++;
+            }
+          }
+        }
+      }
+    }
+    grid = newGrid;
+  }
+  
+  return grid;
 }
 
 module.exports = simulateCellGrowth;
